@@ -4,12 +4,10 @@ import com.idealista.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InMemoryPersistenceTest {
 
@@ -71,7 +69,7 @@ class InMemoryPersistenceTest {
         Ad updatedAd = updatedAds.stream()
                 .filter(ad -> ad.getId().equals(originalId))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new AssertionError("Ad not found"));
 
         assertThat(updatedAd.getScore()).isEqualTo(75);
         assertThat(updatedAd.getIrrelevantSince()).isNotNull();
@@ -94,7 +92,7 @@ class InMemoryPersistenceTest {
         Ad adWithPictures = ads.stream()
                 .filter(ad -> !ad.getPictures().isEmpty())
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new AssertionError("No ad with pictures found"));
 
         assertThat(adWithPictures.getPictures()).isNotEmpty();
         assertThat(adWithPictures.getPictures().get(0)).isNotNull();
@@ -109,7 +107,7 @@ class InMemoryPersistenceTest {
         Ad adWithPictures = originalAds.stream()
                 .filter(ad -> !ad.getPictures().isEmpty())
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new AssertionError("No ad with pictures found"));
 
         assertThat(adWithPictures.getPictures()).isNotEmpty();
         assertThat(adWithPictures.getPictures()).allMatch(picture -> picture.getUrl() != null);
