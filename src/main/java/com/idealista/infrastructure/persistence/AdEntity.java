@@ -1,21 +1,22 @@
-package com.idealista.infrastructure.api;
+package com.idealista.infrastructure.persistence;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PublicAd {
+public class AdEntity {
     private Integer id;
     private String typology;
     private String description;
-    private List<String> pictureUrls;
+    private List<Integer> pictures;
     private Integer houseSize;
     private Integer gardenSize;
+    private Integer score;
+    private Date irrelevantSince;
 }

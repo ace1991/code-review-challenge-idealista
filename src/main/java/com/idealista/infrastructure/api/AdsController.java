@@ -6,13 +6,18 @@ import com.idealista.application.AdsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AdsController {
 
+    private final AdsService adsService;
+
     @Autowired
-    private AdsService adsService;
+    public AdsController(AdsService adsService) {
+        this.adsService = adsService;
+    }
 
     @GetMapping("/ads/quality")
     public ResponseEntity<List<QualityAd>> qualityListing() {
@@ -24,7 +29,7 @@ public class AdsController {
         return ResponseEntity.ok(adsService.findPublicAds());
     }
 
-    @GetMapping("/ads/score")
+    @PostMapping("/ads/score")
     public ResponseEntity<Void> calculateScore() {
         adsService.calculateScores();
         return ResponseEntity.accepted().build();
